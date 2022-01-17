@@ -23,14 +23,16 @@ function Withdraw(){
       setStatus('Error: Withdrawal amount exceeds your current balance. Please enter a different amount');
       return false;
     }
+    return true;
+  }
 
+  function validateNan(amount){
     if (isNaN(amount)) { 
-     setTimeout(setStatus('Error: Please enter a number',5000));
+     setStatus('Error: Please enter a number');
+     setTimeout(() => setStatus(''),5000);
      return "Enter a number";
     }
-
     return true;
-
   }
   
   function handleDeposit(){
@@ -60,6 +62,7 @@ function Withdraw(){
                 <span className="input-group-addon" >$</span>
                 <input type="text" className="form-control" id="amount" placeholder="Enter amount" value={amount} onChange={e => {
                   validate(e.currentTarget.value);
+                  validateNan(e.currentTarget.value);
                   setAmount(e.currentTarget.value);}} /><br/>
               </div> <br/>
               <button type="submit" className="btn btn-light" disabled={amount.length<1 || isNaN(amount)} onClick={handleDeposit}>Withdraw</button>
