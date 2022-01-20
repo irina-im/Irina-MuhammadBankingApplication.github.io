@@ -3,50 +3,51 @@ function Withdraw(){
   const [show, setShow]         = React.useState(true);
   const [status, setStatus]     = React.useState('');
   const [balance, setBalance]   = React.useState(ctx.users[0].balance);
-  const [amount, setAmount]     = React.useState('');
+  const [withdrawal, setWithdrawal]     = React.useState('');
   
 
   function clearForm(){
-    setAmount('');
+    setWithdrawal('');
     setShow(true);
   }
 
-  function validate(amount){
-    if (amount <0) {
+  function validate(withdrawal){
+    if (withdrawal <0) {
       setStatus('Error: Please enter a positive amount');
       return false;
     }
 
-    let a = Math.abs(amount);
+    let a = Math.abs(withdrawal);
     let b = Math.abs(ctx.users[0].balance);
     if (a > b) {
       setStatus('Error: Withdrawal amount exceeds your current balance. Please enter a different amount');
+      setTimeout(() => setStatus(''),5000);
       return false;
     }
     return true;
   }
 
-  function validateNan(amount){
-    if (isNaN(amount)) { 
+  function validateNan(withdrawal){
+    if (isNaN(withdrawal)) { 
      setStatus('Error: Please enter a number');
-     setTimeout(() => setStatus(''),5000);
+     setTimeout(() => setStatus(''),4000);
      return "Enter a number";
     }
     return true;
   }
   
   function handleDeposit(){
-    if (!validate(amount, 'amount')) return;
-    ctx.users[0].balance -= Number(amount);
+    if (!validate(withdrawal, 'withdrawal')) return;
+    ctx.users[0].balance -= Number(withdrawal);
     const balance = ctx.users[0].balance;
  
     setBalance(ctx.users[0].balance);
 
-    ctx.users.push({amount, balance});
+    ctx.users.push({withdrawal, balance});
     setShow(false);
     
     setStatus(''); // clear errors
-    console.log(ctx.users[0].balance, amount);
+    console.log(ctx.users[0].balance, withdrawal);
   }
 
   return (
@@ -62,17 +63,17 @@ function Withdraw(){
               Withdrawal amount<br/>
               <div className="input-group">
                 <span className="input-group-addon" >$</span>
-                <input type="text" className="form-control" id="amount" placeholder="Enter amount" value={amount} onChange={e => {
+                <input type="text" className="form-control" id="withdrawal" placeholder="Enter amount" value={withdrawal} onChange={e => {
                   validate(e.currentTarget.value);
                   validateNan(e.currentTarget.value);
-                  setAmount(e.currentTarget.value);}} /><br/>
+                  setWithdrawal(e.currentTarget.value);}} /><br/>
               </div> <br/>
-              <button type="submit" className="btn btn-light" disabled={amount.length<1 || isNaN(amount)} onClick={handleDeposit}>Withdraw</button>
+              <button type="submit" className="btn btn-light" disabled={withdrawal.length<1 || isNaN(withdrawal)} onClick={handleDeposit}>Withdraw</button>
               </>
             ):(
               <>
               <h5>Success</h5>
-              Withdrawn: ${amount}<br/>
+              Withdrawn: ${withdrawal}<br/>
               Current balance: ${ctx.users[0].balance} <br/><br/>
               <button type="submit" className="btn btn-light" onClick={clearForm}>Withdraw another amount</button>
               </>

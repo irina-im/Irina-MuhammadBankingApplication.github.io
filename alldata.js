@@ -13,7 +13,7 @@ function AllData(){
  
       <div className="card-body">
         <h4 className="card-title">All Data</h4>
-        <p className="card-text">{all}</p>
+        <label className="card-text">{all}</label>
       </div>
     </div>
     </>
