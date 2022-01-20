@@ -4,7 +4,7 @@ function CreateAccount(){
   const [name, setName]         = React.useState('');
   const [email, setEmail]       = React.useState('');
   const [password, setPassword] = React.useState('');
-  const ctx = React.useContext(UserContext);  
+  var ctx = React.useContext(UserContext);  
 
   function validate(field, label){
     if (!field) {
@@ -14,11 +14,10 @@ function CreateAccount(){
 
     if (label="password" && field.length<8) {
       setStatus('Error: Password must be at least 8 characters');
+      setTimeout(() => setStatus(''),4000);
       return false;
     }
-
     return true;
-
   }
 
   function handleCreate(){
@@ -27,8 +26,9 @@ function CreateAccount(){
     if (!validate(email,    'email'))    return;
     if (!validate(password, 'password')) return;
     ctx.users.push({name,email,password,balance:0,deposit:[],withdrawal:[]});
+    console.log(UserContext);
     setShow(false);
-    //setStatus(''); // clear errors
+    setStatus(''); // clear errors
   }    
 
   function clearForm(){

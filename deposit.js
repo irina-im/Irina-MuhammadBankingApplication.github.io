@@ -3,24 +3,25 @@ function Deposit(){
   const ctx = React.useContext(UserContext); 
   const [show, setShow]         = React.useState(true);
   const [status, setStatus]     = React.useState('');
-  const [balance, setBalance]   = React.useState(ctx.users[0].balance);
-  const [amount, setAmount]     = React.useState('');
+  const [balance, setBalance]   = React.useState('0');
+  const [deposit, setDeposit]   = React.useState('');
+  
   
   function clearForm(){
-    setAmount('');
+    setDeposit('');
     setShow(true);
   }
 
-  function validate(amount){
-    if (amount <0) {
+  function validate(deposit){
+    if (deposit <0) {
       setStatus('Error: Please enter a positive amount');
       return false;
     }
     return true;
   }
 
-  function validateNan(amount){
-    if (isNaN(amount)) { 
+  function validateNan(deposit){
+    if (isNaN(deposit)) { 
      setStatus('Error: Please enter a number');
      setTimeout(() => setStatus(''),5000);
      return "Enter a number";
@@ -30,15 +31,19 @@ function Deposit(){
   }
   
   function handleDeposit(){
-    if (!validate(amount, 'amount')) return;
-    ctx.users[0].balance += Number(amount);
+    if (!validate(deposit, 'deposit')) return;
+    ctx.users[0].balance += Number(deposit);
+    const balance = ctx.users[0].balance;
  
+    setBalance(ctx.users[0].balance);
+    
+    console.log(balance);
 
-    ctx.users.push({balance, amount});
+    ctx.users.push({deposit, balance});
     setShow(false);
-    setBalance(ctx.users[0].balance)
+    
     setStatus(''); // clear errors
-    console.log(ctx.users[0].balance, amount);
+    console.log(ctx.users[0].balance, deposit);
   }
 
   return (
@@ -54,17 +59,17 @@ function Deposit(){
               Deposit amount<br/>
               <div className="input-group">
                 <span className="input-group-addon" >$</span>
-                <input type="input" className="form-control" id="amount" placeholder="Enter amount" value={amount} onChange={e => {
+                <input type="input" className="form-control" id="deposit" placeholder="Enter amount" value={deposit} onChange={e => {
                   validate(e.currentTarget.value);
                   validateNan(e.currentTarget.value);
-                  setAmount(e.currentTarget.value);}} /><br/>
+                  setDeposit(e.currentTarget.value);}} /><br/>
               </div> <br/>
-              <button type="submit" className="btn btn-light" disabled={amount.length<1} onClick={handleDeposit}>Deposit</button>
+              <button type="submit" className="btn btn-light" disabled={deposit.length<1} onClick={handleDeposit}>Deposit</button>
               </>
             ):(
               <>
               <h5>Success</h5>
-              Deposited: ${amount}<br/>
+              Deposited: ${deposit}<br/>
               Current balance: ${ctx.users[0].balance} <br/><br/>
               <button type="submit" className="btn btn-light" onClick={clearForm}>Add another amount</button>
               </>

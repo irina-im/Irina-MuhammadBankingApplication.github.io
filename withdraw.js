@@ -38,11 +38,13 @@ function Withdraw(){
   function handleDeposit(){
     if (!validate(amount, 'amount')) return;
     ctx.users[0].balance -= Number(amount);
+    const balance = ctx.users[0].balance;
  
+    setBalance(ctx.users[0].balance);
 
-    ctx.users.push({balance, amount});
+    ctx.users.push({amount, balance});
     setShow(false);
-    setBalance(ctx.users[0].balance)
+    
     setStatus(''); // clear errors
     console.log(ctx.users[0].balance, amount);
   }

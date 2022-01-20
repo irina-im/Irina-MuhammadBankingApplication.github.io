@@ -22,7 +22,7 @@ function NavBar(){
           <a className="nav-link" href="#/withdraw/" title="Make a withdrawal">Withdraw</a>
         </li>
         <li className="nav-item">
-            <a className="nav-link" href="#/alldata/" title="View all submissions">All Data</a>
+            <a className="nav-link" href="#/alldata/" title="View all data in store">All Data</a>
         </li>
       </ul>
     </div>

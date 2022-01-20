@@ -1,30 +1,22 @@
 function AllData(){
   const ctx = React.useContext(UserContext);  
   const [show, setShow]         = React.useState(true);
+  console.log(ctx.users);
+  const all = <pre>{JSON.stringify(ctx.users, null, 2)}</pre>;
+  
 
   
   return (
-    <Card
-      bgcolor="primary"
-      header={(<h4>All Data</h4>)}
+    <>
+   
+    <div className="card" style={{ backgroundColor: "royalblue", color: "white", width: '30rem'}}>
+ 
+      <div className="card-body">
+        <h4 className="card-title">All Data</h4>
+        <p className="card-text">{all}</p>
+      </div>
+    </div>
+    </>
+  );
 
-      body={show ? (  
-              <>
-              Name<br/>
-              <label  className="form-control" id="name" value={ctx.users.name} /><br/>
-              Email address<br/>
-              <label  className="form-control" id="email" value={ctx.users.email} /><br/>
-              Password<br/>
-              <label  className="form-control" id="password" value={ctx.users.password}/><br/>
-              Deposit<br/>
-              <label  className="form-control" id="amount" value={ctx.users[0].amount}/><br/>
-              </>
-            ):(
-              <>
-              <h5>Success</h5>
-              
-              </>
-            )}
-    />
-  )
 }
