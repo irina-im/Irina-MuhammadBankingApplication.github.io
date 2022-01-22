@@ -23,7 +23,7 @@ function Deposit(){
   function validateNan(deposit){
     if (isNaN(deposit)) { 
      setStatus('Error: Please enter a number');
-     setTimeout(() => setStatus(''),5000);
+     setTimeout(() => setStatus(''),4000);
      return "Enter a number";
     }
     return true;
@@ -59,12 +59,12 @@ function Deposit(){
               Deposit amount<br/>
               <div className="input-group">
                 <span className="input-group-addon" >$</span>
-                <input type="input" className="form-control" id="deposit" placeholder="Enter amount" value={deposit} onChange={e => {
+                <input type="text" className="form-control" id="deposit" placeholder="Enter amount" value={deposit} onChange={e => {
                   validate(e.currentTarget.value);
                   validateNan(e.currentTarget.value);
                   setDeposit(e.currentTarget.value);}} /><br/>
               </div> <br/>
-              <button type="submit" className="btn btn-light" disabled={deposit.length<1} onClick={handleDeposit}>Deposit</button>
+              <button type="submit" className="btn btn-light" disabled={deposit.length<1 || isNaN(deposit)} onClick={handleDeposit}>Deposit</button>
               </>
             ):(
               <>
